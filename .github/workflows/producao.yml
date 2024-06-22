@@ -1,4 +1,4 @@
-name: Pipeline Workflow 
+name: Pipeline Producao Workflow 
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
         run: npm install
 
       - name: Lint code
-        run: npm run lint
+        run: npx eslint . --ext .js 
 
       - name: Run tests
         run: npm test

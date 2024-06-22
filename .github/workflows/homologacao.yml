@@ -1,0 +1,35 @@
+name: Pipeline Homologacao Workflow 
+
+on:
+  push:
+    branches: "dev"
+  pull_request:
+    branches: "dev"
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18' 
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint code
+        run: npx eslint '**/*.js' --ignore-pattern 'node_modules/ 
+
+      - name: Run tests
+        run: npm test
+
+      - name: Check code coverage
+        run: npm run coverage
+
+      - name: Build application
+        run: npm run build 
