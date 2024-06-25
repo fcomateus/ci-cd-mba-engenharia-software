@@ -11,12 +11,19 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 
-const contatoController = require('../controllers/contato.controller');
+const ContatoController = require('../controllers/contato.controller');
+const contatoController = new ContatoController()
 
 router.route('/')
     .get(contatoController.getAll);
 
+router.route('/')
+    .post(contatoController.insertContato);
+
 router.route('/:_id')
-    .get(contatoController.get);
+  .get(contatoController.get);
+
+router.route('/:_id')
+  .delete(contatoController.remove)
 
 module.exports = router;
