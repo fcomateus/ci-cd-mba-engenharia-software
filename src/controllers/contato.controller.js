@@ -19,11 +19,21 @@ const getAll = async function(req, res){
 }
 
 const insertContato = function(req, res){
-    res.send(contatoService.insertContato(req.params.nome, req.params.telefone, req.params.email));
+    res.send(contatoService.insertContato(req.body.nome, req.body.telefone, req.body.email));
+}
+
+const updateContato = function(req, res){
+    res.send(contatoService.updateContato(req.params._id, req.body.nome, req.body.telefone, req.body.email));
+}
+
+const remove = async function(req, res){
+    res.send(await contatoService.remove( req.params._id));
 }
 
 module.exports = {
     get,
     getAll,
-    insertContato
+    insertContato,
+    updateContato,
+    remove
 };

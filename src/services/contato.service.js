@@ -22,12 +22,24 @@ const getAll = async function(){
 }
 
 const insertContato = async function(nome, telefone, email){
-    const contatos = new Contato()
+    const contatos = new Contato();
     return await contatos.create(nome, telefone, email)
+}
+
+const updateContato = async function(_id, nome, telefone, email){
+    const contatos = new Contato();
+    return await contatos.update(_id, nome, telefone, email)
+}
+
+const remove = async function(_id){
+    const contatos = new Contato();
+    return (await contatos.remove(_id));
 }
 
 module.exports = {
     get,
     getAll,
-    insertContato
+    insertContato,
+    updateContato,
+    remove
 };

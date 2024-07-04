@@ -94,11 +94,24 @@ class Contato {
         dbConnection.close()
     }
 
+    async update(id, name, phone, email) {
+        const dbConnection = await sqliteConnection()
+        const query = `
+            UPDATE contatos 
+            SET nome = '${name}', 
+                telefone = '${phone}', 
+                email = '${email}'
+            WHERE _id = '${id}'
+        `
+        await dbConnection.exec(query)
+        dbConnection.close()
+    }
+
     async remove(id) {
         const dbConnection = await sqliteConnection()
 
         const query = `
-            DELETE FROM contatos WHERE id = '${id}'
+            DELETE FROM contatos WHERE _id = '${id}'
         `
 
         await dbConnection.exec(query)
