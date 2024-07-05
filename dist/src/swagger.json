@@ -47,15 +47,105 @@
           }
         }
       }
+    },
+    "/contato/remover/{contatoId}": {
+      "delete": {
+        "x-swagger-router-controller": "contatos",
+        "operationId": "removeContato",
+        "tags": ["Contatos"],
+        "summary": "Remove contato by id",
+        "parameters": [ {
+          "name": "contatoId",
+          "in": "path",
+          "type": "number",
+          "required": true
+        }],
+        "responses": {
+          "200": {
+            "description": "Remove contato by id",
+            "schema": {
+              "$ref": "#/definitions/Contato"
+            }
+          }
+        }
+      }
+    },
+    "/contato/inserir/": {
+      "post": {
+        "x-swagger-router-controller": "contatos",
+        "operationId": "postContato",
+        "tags": ["Contatos"],
+        "summary": "Post contato",
+        "parameters": [ {
+          "name": "Contato",
+          "in": "body",
+          "schema" : {
+            "$ref": "#/definitions/InsereContato"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Get contato by id",
+            "schema": {
+              "$ref": "#/definitions/Contato"
+            }
+          }
+        }
+      }
+    },
+    "/contato/atualizar/{contatoId}": {
+      "post": {
+        "x-swagger-router-controller": "contatos",
+        "operationId": "updateContato",
+        "tags": ["Contatos"],
+        "summary": "Update contato",
+        "parameters": [ {
+          "name": "contatoId",
+          "in": "path",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "Contato",
+          "in": "body",
+          "schema" : {
+            "$ref": "#/definitions/InsereContato"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Get contato by id",
+            "schema": {
+              "$ref": "#/definitions/Contato"
+            }
+          }
+        }
+      }
     }
   },
   "definitions":{
     "Contato": {
       "properties": {
-        "_id": {
+        "id": {
           "type": "string",
           "example": 0
         },
+        "nome": {
+          "type": "string",
+          "example":"Teste"
+        },
+        "email": {
+          "type": "string",
+          "example":"teste@teste.com"
+        },
+        "telefone": {
+          "type": "string",
+          "example":"(99) 99999-9999"
+        }
+      }
+    },
+    "InsereContato": {
+      "properties": {
         "nome": {
           "type": "string",
           "example":"Teste"

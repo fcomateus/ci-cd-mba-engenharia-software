@@ -8,17 +8,34 @@
   Copyright IBM Corporation 2020
 */
 
-const data = require('../data');
+class ContatoService {
 
-const get = function(_id){
-    return getAll().find(account => account._id == _id);
+    repository = null
+
+    constructor(repository) {
+        this.repository = repository
+    }
+
+    get = async function(_id){
+        const contact = await this.repository.getById(_id)
+        return contact
+    }
+    
+    getAll = async function(){
+        return await this.repository.list() 
+    }
+    
+    insertContato = async function(nome, telefone, email){
+        return await this.repository.create(nome, telefone, email)
+    }
+    
+    updateContato = async function(_id, nome, telefone, email){
+        return await this.repository.update(_id, nome, telefone, email)
+    }
+    
+    remove = async function(_id){
+        return await this.repository.remove(_id);
+    }
 }
 
-const getAll = function(){
-    return data.Contato;
-}
-
-module.exports = {
-    get,
-    getAll
-};
+module.exports = ContatoService
