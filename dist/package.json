@@ -7,7 +7,7 @@
     "dev": "nodemon src/index.js",
     "dev:https": "nodemon src/index.js --key sslcert/server.key --cert sslcert/server.cert",
     "start": "node src/index.js",
-    "lint": "eslint eslint.js",
+    "lint": "eslint .",
     "clean": "rimraf dist && mkdirp dist",
     "copy": "node copy-files.js",
     "build": "npm run clean && npm run copy",
