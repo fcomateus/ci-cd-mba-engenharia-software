@@ -99,5 +99,8 @@ describe('contacts service', () => {
         expect(contatoRepository.remove).toHaveBeenCalledTimes(1)
 
     })
-
+    
+    test('teste falho', () => {
+        expect(1+1).toEqual(4)
+    })
 })
