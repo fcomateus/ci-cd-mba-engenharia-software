@@ -36,6 +36,11 @@ class ContatoService {
     remove = async function(_id){
         return await this.repository.remove(_id);
     }
+
+    validateContactName = (name) => {
+        let res =  /^[a-zA-Z\s]*$/.test(name);
+        return res;
+    }
 }
 
 module.exports = ContatoService
