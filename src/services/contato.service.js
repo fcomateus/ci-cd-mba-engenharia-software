@@ -36,6 +36,18 @@ class ContatoService {
     remove = async function(_id){
         return await this.repository.remove(_id);
     }
+
+    validatePhone = function(_phone) {
+
+        if(String(_phone).length > 10 && String(_phone) < 15) {
+            return false
+        }
+
+        const regex = /^[0-9]+$/;
+
+        return regex.test(_phone)
+
+    }
 }
 
 module.exports = ContatoService

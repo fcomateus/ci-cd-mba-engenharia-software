@@ -100,4 +100,14 @@ describe('contacts service', () => {
 
     })
 
+    test('validar telefone', async() => {
+
+        const mockTelephone = "85987654321"
+        const result = contatoService.validatePhone(mockTelephone)
+        
+        expect(result).toBe(true)
+
+
+    })
+
 })
