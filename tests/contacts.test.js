@@ -54,7 +54,7 @@ describe('contacts service', () => {
 
         contatoRepository.getById.mockResolvedValue(mockContacts)
 
-        const id = 1
+        const id = mockContacts.id
         const contact = await contatoService.get(id)
 
         console.log('log single contagft', contact);
@@ -100,4 +100,23 @@ describe('contacts service', () => {
 
     })
 
+    const casosDeTesteEmail = [
+        { email: 'usuario@dominio.com', esperado: true },
+        { email: 'email_com_pontos@empresa.com', esperado: true },
+        { email: 'email@dominio.co.uk', esperado: true },
+        { email: 'invalido@sem@arrouba.com', esperado: false },
+        { email: 'sem-arrouba.com', esperado: false },
+        { email: 'usuario@dominio', esperado: false },
+      ];
+      
+      describe('Test validate e-mail', () => {
+        casosDeTesteEmail.forEach(({ email, esperado }) => {
+          test(`Email "${email}" should be ${esperado ? 'true' : 'false'}`, () => {
+            console.log("aqui")
+            let resultado = contatoService.ValidarEmail(email)
+            console.log(resultado)
+            expect(contatoService.ValidarEmail(email)).toEqual(esperado);
+          });
+        });
+      });
 })

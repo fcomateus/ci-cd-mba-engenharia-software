@@ -36,6 +36,11 @@ class ContatoService {
     remove = async function(_id){
         return await this.repository.remove(_id);
     }
+
+    ValidarEmail = function (email) {    
+        const expressao = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return expressao.test(email);
+    }
 }
 
 module.exports = ContatoService
