@@ -1,14 +1,17 @@
 const ContatoService = require('../src/services/contato.service.js')
+const ValidateService = require('../src/validate/validate.service.js')
 const ContatoRepository = require('../src/repository/contact.repository.js')
 
 jest.mock('../src/repository/contact.repository.js')
 
 describe('contacts service', () => {
     let contatoService
+    let validateService
     let contatoRepository
 
     beforeEach(() => {
         contatoRepository = new ContatoRepository()
+        validateService = new ValidateService()
         contatoService = new ContatoService(contatoRepository)
     })
 
@@ -112,10 +115,7 @@ describe('contacts service', () => {
       describe('Test validate e-mail', () => {
         casosDeTesteEmail.forEach(({ email, esperado }) => {
           test(`Email "${email}" should be ${esperado ? 'true' : 'false'}`, () => {
-            console.log("aqui")
-            let resultado = contatoService.ValidarEmail(email)
-            console.log(resultado)
-            expect(contatoService.ValidarEmail(email)).toEqual(esperado);
+            expect(validateService.validarEmail(email)).toEqual(esperado);
           });
         });
       });
