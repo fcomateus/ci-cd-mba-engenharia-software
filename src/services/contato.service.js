@@ -45,8 +45,6 @@ class ContatoService {
 
         const regex = /^[0-9]+$/;
         return regex.test(_phone)
-
     }
-}
 
 module.exports = ContatoService
