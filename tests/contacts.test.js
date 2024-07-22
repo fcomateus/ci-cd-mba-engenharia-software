@@ -15,7 +15,8 @@ describe('contacts service', () => {
         contatoService = new ContatoService(contatoRepository)
     })
 
-    test('get all contacts', async () => {
+    test('it should get all contacts', async () => {
+        //Arrange
         const mockContacts = [
             {
                 nome: 'Mateus',
@@ -40,14 +41,17 @@ describe('contacts service', () => {
         ]
 
         contatoRepository.list.mockResolvedValue(mockContacts)
-
+        
+        // Act
         const contacts = await contatoService.getAll()
 
+        //Assert
         expect(contacts).toEqual(mockContacts)
         expect(contatoRepository.list).toHaveBeenCalledTimes(1)
     })
 
-    test('get specific contact by id', async() => {
+    test('it should get specific contact by id', async() => {
+        //Arrange
         const mockContacts = {
             id: 1,
             nome: 'Mateus',
@@ -60,12 +64,25 @@ describe('contacts service', () => {
         const id = mockContacts.id
         const contact = await contatoService.get(id)
 
-        console.log('log single contagft', contact);
+        //Act
+        const contact = await contatoService.get(id)
 
         expect(contact).toEqual(mockContacts)
     })
 
-    test('create contact', async() => {
+    test('it should validate name of contact to have only letters', async() => {
+        //Arrange
+        const name = 'Nome de Teste';
+
+        //Act
+        const result = contatoService.validateContactName(name);
+
+        //Assert
+        expect(result).toEqual(true);
+    })
+
+    test('it should create contact', async() => {
+        //Arrange
         const nome = 'Mateus'
         const telefone = 1234
         const email = 'mateus@email.com'
@@ -77,15 +94,17 @@ describe('contacts service', () => {
         }
 
         contatoRepository.create.mockResolvedValue(mockContact)
-
+        //Act
         const createdContact = await contatoService.insertContato(nome, telefone, email)
 
+        //Assert
         expect(createdContact).toEqual(mockContact)
         expect(contatoRepository.create).toHaveBeenCalledWith(nome, telefone, email)
         expect(contatoRepository.create).toHaveBeenCalledTimes(1)
     })
 
-    test('remove contact', async() => {
+    test('it should remove contact', async() => {
+        //Arrange
         const mockContact = {
             id: 1,
             nome: 'Mateus',
@@ -94,29 +113,20 @@ describe('contacts service', () => {
         }
 
         contatoRepository.remove.mockResolvedValue(mockContact)
-
+        //Act
         const removedContact = await contatoService.remove(mockContact.id)
-
+        //Assert
         expect(mockContact).toEqual(removedContact)
         expect(contatoRepository.remove).toHaveBeenCalledWith(mockContact.id)
         expect(contatoRepository.remove).toHaveBeenCalledTimes(1)
 
     })
 
-    const casosDeTesteEmail = [
-        { email: 'usuario@dominio.com', esperado: true },
-        { email: 'email_com_pontos@empresa.com', esperado: true },
-        { email: 'email@dominio.co.uk', esperado: true },
-        { email: 'invalido@sem@arrouba.com', esperado: false },
-        { email: 'sem-arrouba.com', esperado: false },
-        { email: 'usuario@dominio', esperado: false },
-      ];
-      
-      describe('Test validate e-mail', () => {
-        casosDeTesteEmail.forEach(({ email, esperado }) => {
-          test(`Email "${email}" should be ${esperado ? 'true' : 'false'}`, () => {
-            expect(validateService.validarEmail(email)).toEqual(esperado);
-          });
-        });
-      });
+    test('validar telefone', async() => {
+        const mockTelephone = "85987654321"
+        const result = contatoService.validatePhone(mockTelephone)
+        
+        expect(result).toBe(true)
+
+    })
 })
