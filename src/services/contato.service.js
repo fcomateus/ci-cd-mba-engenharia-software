@@ -17,7 +17,16 @@ class ContatoService {
     }
 
     get = async function(_id){
+        if(isNaN(_id)) {
+            throw new Error('Id não numérico')
+        }
+
         const contact = await this.repository.getById(_id)
+
+        if(contact == null) {
+            throw new Error('Contato não encontrado')
+        }
+
         return contact
     }
     
@@ -46,5 +55,11 @@ class ContatoService {
         const regex = /^[0-9]+$/;
         return regex.test(_phone)
     }
+
+    validateContactName = (name) => {
+        let res =  /^[a-zA-Z\s]*$/.test(name);
+        return res;
+    }
+}
 
 module.exports = ContatoService

@@ -62,8 +62,6 @@ describe('contacts service', () => {
         contatoRepository.getById.mockResolvedValue(mockContacts)
 
         const id = mockContacts.id
-        const contact = await contatoService.get(id)
-
         //Act
         const contact = await contatoService.get(id)
 
@@ -122,11 +120,19 @@ describe('contacts service', () => {
 
     })
 
-    test('validar telefone', async() => {
+    test('it should validate phone format', async() => {
         const mockTelephone = "85987654321"
         const result = contatoService.validatePhone(mockTelephone)
         
         expect(result).toBe(true)
+    })
 
+    test('it should throw error when search for inexistent contact by id', async () => {
+        const inexistentId = 1
+        try {
+            await contatoService.get(inexistentId);
+        } catch (e) {
+            expect(e.message).toBe('Contato não encontrado');
+        }
     })
 })
