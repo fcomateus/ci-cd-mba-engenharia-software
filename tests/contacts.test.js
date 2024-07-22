@@ -1,14 +1,17 @@
 const ContatoService = require('../src/services/contato.service.js')
+const ValidateService = require('../src/validate/validate.service.js')
 const ContatoRepository = require('../src/repository/contact.repository.js')
 
 jest.mock('../src/repository/contact.repository.js')
 
 describe('contacts service', () => {
     let contatoService
+    let validateService
     let contatoRepository
 
     beforeEach(() => {
         contatoRepository = new ContatoRepository()
+        validateService = new ValidateService()
         contatoService = new ContatoService(contatoRepository)
     })
 
@@ -54,7 +57,7 @@ describe('contacts service', () => {
 
         contatoRepository.getById.mockResolvedValue(mockContacts)
 
-        const id = 1
+        const id = mockContacts.id
         const contact = await contatoService.get(id)
 
         console.log('log single contagft', contact);
@@ -100,4 +103,20 @@ describe('contacts service', () => {
 
     })
 
+    const casosDeTesteEmail = [
+        { email: 'usuario@dominio.com', esperado: true },
+        { email: 'email_com_pontos@empresa.com', esperado: true },
+        { email: 'email@dominio.co.uk', esperado: true },
+        { email: 'invalido@sem@arrouba.com', esperado: false },
+        { email: 'sem-arrouba.com', esperado: false },
+        { email: 'usuario@dominio', esperado: false },
+      ];
+      
+      describe('Test validate e-mail', () => {
+        casosDeTesteEmail.forEach(({ email, esperado }) => {
+          test(`Email "${email}" should be ${esperado ? 'true' : 'false'}`, () => {
+            expect(validateService.validarEmail(email)).toEqual(esperado);
+          });
+        });
+      });
 })
