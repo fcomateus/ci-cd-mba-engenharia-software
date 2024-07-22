@@ -17,7 +17,13 @@ const contatoService = new ContatoService(contatoRepository)
 class ContatoController {
 
     get = async function(req, res){
-        res.send(await contatoService.get( req.params._id));
+
+        try {
+            const contact = await contatoService.get( req.params._id)
+            return contact
+        } catch (error) {
+            return res.status(400).json({ error: error.message })          
+        }
     }
     
     getAll = async function(req, res){
