@@ -63,7 +63,6 @@ describe('contacts service', () => {
         //Act
         const contact = await contatoService.get(id)
 
-        //Assert
         expect(contact).toEqual(mockContacts)
     })
 
@@ -116,6 +115,14 @@ describe('contacts service', () => {
         expect(mockContact).toEqual(removedContact)
         expect(contatoRepository.remove).toHaveBeenCalledWith(mockContact.id)
         expect(contatoRepository.remove).toHaveBeenCalledTimes(1)
+
+    })
+
+    test('validar telefone', async() => {
+        const mockTelephone = "85987654321"
+        const result = contatoService.validatePhone(mockTelephone)
+        
+        expect(result).toBe(true)
 
     })
 

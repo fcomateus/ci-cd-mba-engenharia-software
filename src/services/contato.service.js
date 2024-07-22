@@ -37,10 +37,14 @@ class ContatoService {
         return await this.repository.remove(_id);
     }
 
-    validateContactName = (name) => {
-        let res =  /^[a-zA-Z\s]*$/.test(name);
-        return res;
+    validatePhone = function(_phone) {
+
+        if(String(_phone).length < 11 || String(_phone).length > 14) {
+            return false
+        }
+
+        const regex = /^[0-9]+$/;
+        return regex.test(_phone)
     }
-}
 
 module.exports = ContatoService
