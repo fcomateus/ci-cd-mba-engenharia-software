@@ -1,14 +1,17 @@
 const ContatoService = require('../src/services/contato.service.js')
+const ValidateService = require('../src/validate/validate.service.js')
 const ContatoRepository = require('../src/repository/contact.repository.js')
 
 jest.mock('../src/repository/contact.repository.js')
 
 describe('contacts service', () => {
     let contatoService
+    let validateService
     let contatoRepository
 
     beforeEach(() => {
         contatoRepository = new ContatoRepository()
+        validateService = new ValidateService()
         contatoService = new ContatoService(contatoRepository)
     })
 
@@ -58,7 +61,8 @@ describe('contacts service', () => {
 
         contatoRepository.getById.mockResolvedValue(mockContacts)
 
-        const id = 1
+        const id = mockContacts.id
+        const contact = await contatoService.get(id)
 
         //Act
         const contact = await contatoService.get(id)
@@ -125,5 +129,4 @@ describe('contacts service', () => {
         expect(result).toBe(true)
 
     })
-
 })
