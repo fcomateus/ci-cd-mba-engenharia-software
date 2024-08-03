@@ -10,11 +10,13 @@
 
 const express = require('express');
 const contato = require('./contato.route');
+const usuario = require('./usuario.route');
 const swagger = require('./swagger.route');
 
 const router = express.Router();
 
 router.use('/contato', contato);
+router.use('/usuario', usuario);
 router.use('/', swagger);
 
 router.get('/', (req, res) => res.send('Lista de Contatos API'));
